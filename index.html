@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alfred Dates V2</title>
+<style>
+body{font-family:Arial,sans-serif;background:#050505;color:#fff;margin:0}
+.container{max-width:1100px;margin:auto;padding:24px}
+.card{background:#111;border:1px solid #333;border-radius:16px;padding:20px;margin-bottom:20px}
+.red{color:#e50914}
+input,textarea{width:100%;padding:10px;margin:8px 0;background:#222;color:#fff;border:1px solid #444;border-radius:8px}
+button{background:#e50914;color:#fff;border:none;padding:12px 18px;border-radius:8px}
+#ageGate{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center}
+</style>
+</head>
+<body>
+<div id="ageGate">
+<div class="card">
+<h2>18+ Age Verification</h2>
+<p>You must be 18 or older to continue.</p>
+<label><input type="checkbox" id="confirmAge"> I confirm I am 18+</label><br><br>
+<button onclick="enterSite()">Enter Site</button>
+</div>
+</div>
+
+<div class="container">
+<h1>Book a Date with <span class="red">Alfred</span></h1>
+
+<div class="card">
+<h2>Current Waiting List</h2>
+<h1 id="waitingCount">10,648</h1>
+</div>
+
+<div class="card">
+<h2>Skip the Queue</h2>
+<p>Priority review package</p>
+<h3>£10,000</h3>
+</div>
+
+<div class="card">
+<h2>Application</h2>
+<input placeholder="Your name">
+<input placeholder="Email address">
+<label>Upload photos</label>
+<input type="file" multiple accept="image/*">
+<textarea placeholder="Tell Alfred about yourself"></textarea>
+<button>Submit Application</button>
+</div>
+
+<div class="card">
+<h2>Privacy Notice</h2>
+<p>Information and photos are collected only for reviewing applications and should not be shared without consent.</p>
+</div>
+</div>
+
+<script>
+function enterSite(){
+ if(document.getElementById('confirmAge').checked){
+   document.getElementById('ageGate').style.display='none';
+ } else {
+   alert('Please confirm you are 18+');
+ }
+}
+let count=10648;
+setInterval(function(){
+ count++;
+ document.getElementById('waitingCount').textContent=count.toLocaleString();
+},2000);
+</script>
+</body>
+</html>
