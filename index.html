@@ -1,72 +1,75 @@
-<!DOCTYPE html>
-<html lang="en-GB">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alfred Dates V2</title>
-<style>
-body{font-family:Arial,sans-serif;background:#050505;color:#fff;margin:0}
-.container{max-width:1100px;margin:auto;padding:24px}
-.card{background:#111;border:1px solid #333;border-radius:16px;padding:20px;margin-bottom:20px}
-.red{color:#e50914}
-input,textarea{width:100%;padding:10px;margin:8px 0;background:#222;color:#fff;border:1px solid #444;border-radius:8px}
-button{background:#e50914;color:#fff;border:none;padding:12px 18px;border-radius:8px}
-#ageGate{position:fixed;inset:0;background:#000;display:flex;align-items:center;justify-content:center}
-</style>
-</head>
-<body>
-<div id="ageGate">
-<div class="card">
-<h2>18+ Age Verification</h2>
-<p>You must be 18 or older to continue.</p>
-<label><input type="checkbox" id="confirmAge"> I confirm I am 18+</label><br><br>
-<button onclick="enterSite()">Enter Site</button>
-</div>
-</div>
 
-<div class="container">
-<h1>Book a Date with <span class="red">Alfred</span></h1>
+POST DATES
+21+ Entry Check
+This page is for adults only. Please confirm you are 21 or over before continuing.
+I confirm I am 21+ Enter Site
 
-<div class="card">
-<h2>Current Waiting List</h2>
-<h1 id="waitingCount">10,648</h1>
-</div>
+POST DATES
+Track your application
 
-<div class="card">
-<h2>Skip the Queue</h2>
-<p>Priority review package</p>
-<h3>£10,000</h3>
-</div>
+Applications open
+DATE APPLICATION PORTAL
+Book a date with Post.
+Some applications are remembered. Most are forgotten. Upload your photos and make yours stand out.
+£75
+Booking deposit
+10k+
+Live waiting list
+£10k
+Skip the queue
+ACTIVE WAITING LIST
+LIVE
+10,648
 
-<div class="card">
-<h2>Application</h2>
-<input placeholder="Your name">
-<input placeholder="Email address">
-<label>Upload photos</label>
-<input type="file" multiple accept="image/*">
-<textarea placeholder="Tell Alfred about yourself"></textarea>
-<button>Submit Application</button>
-</div>
+Demand remains high. Queue position is updated in real time.
+Payment Options
+Secure your place or jump straight to priority review. Standard deposits are credited back on our wedding day.
+£75 Deposit
+Standard application review
+Pay £75
+£10,000 Skip the Queue
+Priority review, elite applicant lane
+Skip Queue
+Deposit payments secure your application review. The £75 deposit is refundable on our wedding day if things go the distance.
+Reserve your slot
+Submit your details below. Keep it confident, direct, and honest.
+Your name
 
-<div class="card">
-<h2>Privacy Notice</h2>
-<p>Information and photos are collected only for reviewing applications and should not be shared without consent.</p>
-</div>
-</div>
+Email address
 
-<script>
-function enterSite(){
- if(document.getElementById('confirmAge').checked){
-   document.getElementById('ageGate').style.display='none';
- } else {
-   alert('Please confirm you are 18+');
- }
-}
-let count=10648;
-setInterval(function(){
- count++;
- document.getElementById('waitingCount').textContent=count.toLocaleString();
-},2000);
-</script>
-</body>
-</html>
+Age
+
+Weight
+
+City
+
+Preferred date
+
+Preferred time
+          Select a time
+          Friday, 7:30pm
+          Saturday, 6:00pm
+          Saturday, 8:30pm
+          Sunday, 4:00pm
+        
+Ideal first date vibe
+          Choose one
+          Drinks
+          Dinner
+          Arcade date
+          Coffee and walk
+          Surprise me
+        
+Upload recent photos
+
+Why should Post say yes?
+Submit application
+Success Rate: 0.35%
+Your application will be reviewed privately. If accepted, you’ll receive confirmation of next steps, payment details, and date availability.
+How it works
+Apply, upload your photos, select your preferred date, then wait for review. Successful applicants receive confirmation.
+Privacy Notice
+Photos and personal information are used solely for reviewing applications. Submitted data is handled privately, encrypted where stored, and will not be sold, shared, or published without consent.
+Priority Review
+For those who believe life’s best opportunities shouldn’t wait. Priority applicants receive expedited review and front-of-queue consideration.
+© 2026 Post Dates. Built for entertainment, confidence, and dangerously good calendar management.
