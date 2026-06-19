@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Date with Post</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: rgba(18, 18, 18, 0.86);
+      --panel-soft: rgba(255,255,255,0.06);
+      --text: #f7f3ef;
+      --muted: #aaa19c;
+      --red: #e50914;
+      --red-dark: #8f050d;
+      --gold: #d6a84f;
+      --gold-soft: rgba(214,168,79,0.16);
+      --border: rgba(255,255,255,0.11);
+      --shadow: 0 30px 90px rgba(0,0,0,0.62);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(214,168,79,0.18), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(229,9,20,0.20), transparent 32%),
+        radial-gradient(circle at 50% 95%, rgba(229,9,20,0.14), transparent 40%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(circle at center, black, transparent 78%);
+    }
+
+    .page {
+      width: min(1160px, 92%);
+      margin: 0 auto;
+      padding: 30px 0 58px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 46px;
+    }
+
+    .brand {
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--red), var(--gold));
+      box-shadow: 0 0 30px rgba(229,9,20,0.35);
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 14px;
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 34px;
+      align-items: start;
+    }
+
+    .hero-card, .booking-card, .info-card, .payment-card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.025));
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-card {
+      padding: 44px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(229,9,20,0.16);
+      right: -90px;
+      bottom: -110px;
+      filter: blur(5px);
+    }
+
+    .tagline {
+      color: var(--gold);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 12px;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: clamp(44px, 7vw, 82px);
+      line-height: 0.92;
+      margin: 0 0 22px;
+      letter-spacing: -0.065em;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 span { color: var(--red); }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+      max-width: 640px;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .highlight {
+      background: rgba(255,255,255,0.055);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 17px;
+    }
+
+    .highlight strong {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+
+    .highlight span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .waiting-card {
+      margin-top: 18px;
+      padding: 22px;
+      border-radius: 26px;
+      border: 1px solid rgba(214,168,79,0.32);
+      background:
+        linear-gradient(135deg, rgba(214,168,79,0.15), rgba(229,9,20,0.08)),
+        rgba(255,255,255,0.04);
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .waiting-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    .live-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #ffd98d;
+      font-weight: 800;
+    }
+
+    .live-dot::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: statusBlink 1.8s infinite ease-in-out;
+    }
+
+    .waiting-number {
+      font-size: clamp(44px, 8vw, 78px);
+      font-weight: 950;
+      letter-spacing: -0.06em;
+      line-height: 0.95;
+    }
+
+    .progress {
+      height: 10px;
+      width: 100%;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      margin-top: 16px;
+      overflow: hidden;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: 74%;
+      background: linear-gradient(90deg, var(--gold), var(--red));
+      border-radius: inherit;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.78; }
+      50% { opacity: 1; }
+    }
+
+    .booking-card {
+      padding: 30px;
+    }
+
+    .booking-card h2, .payment-card h2 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .booking-card p, .payment-card p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 15px 0 8px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      max-width: 100%;
+      display: block;
+      border: 1px solid var(--border);
+      background: rgba(9,9,9,0.72);
+      color: var(--text);
+      border-radius: 15px;
+      padding: 14px 16px;
+      outline: none;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    input[type="checkbox"] {
+      width: auto;
+      display: inline;
+      margin-right: 8px;
+    }
+
+    input[type="file"] {
+      padding: 12px;
+      cursor: pointer;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: rgba(214,168,79,0.85);
+      box-shadow: 0 0 0 4px rgba(214,168,79,0.12);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 95px;
+    }
+
+    .payment-card {
+      margin-top: 18px;
+      padding: 24px;
+      border-color: rgba(229,9,20,0.32);
+    }
+
+    .payment-options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .pay-option {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(255,255,255,0.045);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .pay-option strong {
+      font-size: 20px;
+      display: block;
+    }
+
+    .pay-option small {
+      color: var(--muted);
+    }
+
+    button, .payment-button {
+      width: 100%;
+      border: 0;
+      border-radius: 16px;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, var(--red), var(--red-dark));
+      color: white;
+      font-weight: 900;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.2s ease, filter 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    button:hover, .payment-button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .gold-button {
+      background: linear-gradient(135deg, var(--gold), #9d6e18);
+      color: #120d04;
+    }
+
+    .section {
+      margin-top: 46px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .info-card {
+      padding: 24px;
+    }
+
+    .info-card h3 {
+      margin: 0 0 10px;
+    }
+
+    .info-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.58;
+      font-size: 14px;
+    }
+
+    .success {
+      display: none;
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(22,163,74,0.12);
+      border: 1px solid rgba(22,163,74,0.35);
+      color: #d7ffe4;
+      line-height: 1.5;
+    }
+
+    .small-print {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    footer {
+      margin-top: 42px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    #ageGate {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at top, rgba(229,9,20,0.20), transparent 32%),
+        rgba(0,0,0,0.94);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+    }
+
+    .age-card {
+      width: min(500px, 100%);
+      background: linear-gradient(145deg, rgba(255,255,255,0.09), rgba(255,255,255,0.035));
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .age-card h2 {
+      margin: 0 0 10px;
+      font-size: 32px;
+    }
+
+    .age-card p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .toast {
+      position: fixed;
+      left: 22px;
+      bottom: 22px;
+      width: min(355px, calc(100vw - 44px));
+      background: rgba(14,14,14,0.94);
+      border: 1px solid rgba(214,168,79,0.28);
+      border-radius: 18px;
+      padding: 15px 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+      display: none;
+      gap: 12px;
+      align-items: center;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--red), var(--gold));
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .toast strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .toast span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .show-toast {
+      display: flex;
+      animation: slideIn 0.35s ease both;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+
+    .review-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9998;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .review-card {
+      width: min(520px, 100%);
+      background: linear-gradient(145deg, rgba(24,24,24,0.98), rgba(8,8,8,0.98));
+      border: 1px solid rgba(214,168,79,0.28);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      animation: reviewPop 0.35s ease both;
+    }
+
+    .review-card h2 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    .review-card p {
+      color: var(--muted);
+      line-height: 1.55;
+      margin: 0 0 22px;
+    }
+
+    .review-steps {
+      display: grid;
+      gap: 14px;
+      margin: 20px 0 22px;
+    }
+
+    .review-step {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid var(--border);
+    }
+
+    .step-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--gold), var(--red));
+      color: #fff;
+      font-weight: 900;
+      animation: glow 1.8s infinite ease-in-out;
+    }
+
+    .review-step strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .review-step span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    @keyframes reviewPop {
+      from { opacity: 0; transform: translateY(18px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 0 rgba(214,168,79,0); }
+      50% { box-shadow: 0 0 28px rgba(214,168,79,0.38); }
+    }
+
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 0 rgba(34,197,94,0.65);
+      animation: statusBlink 1.8s infinite ease-in-out;
+    }
+
+    @keyframes statusBlink {
+      0%, 100% {
+        opacity: 0.55;
+        box-shadow: 0 0 0 0 rgba(34,197,94,0.45);
+      }
+      50% {
+        opacity: 1;
+        box-shadow: 0 0 18px 6px rgba(34,197,94,0.18);
+      }
+    }
+
+    .track-link {
+      width: auto;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: none;
+    }
+
+    .track-link:hover {
+      color: var(--text);
+      border-color: rgba(214,168,79,0.36);
+    }
+
+
+    .pay-option.selected {
+      border-color: rgba(214,168,79,0.78);
+      background:
+        linear-gradient(135deg, rgba(214,168,79,0.18), rgba(229,9,20,0.08)),
+        rgba(255,255,255,0.055);
+      box-shadow: 0 0 0 4px rgba(214,168,79,0.08), 0 18px 45px rgba(0,0,0,0.35);
+      transform: translateY(-1px);
+    }
+
+    .pay-option.selected::after {
+      content: "Selected";
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #120d04;
+      background: linear-gradient(135deg, var(--gold), #f3d78a);
+      padding: 6px 9px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .track-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9997;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .track-card {
+      width: min(430px, 100%);
+      background: linear-gradient(145deg, rgba(24,24,24,0.98), rgba(8,8,8,0.98));
+      border: 1px solid rgba(214,168,79,0.26);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      animation: reviewPop 0.32s ease both;
+    }
+
+    .track-card h2 {
+      margin: 0 0 8px;
+      font-size: 25px;
+    }
+
+    .track-card p {
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 0 0 18px;
+      font-size: 14px;
+    }
+
+    .track-result {
+      display: none;
+      margin-top: 14px;
+      padding: 13px;
+      border-radius: 14px;
+      background: rgba(214,168,79,0.10);
+      border: 1px solid rgba(214,168,79,0.24);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .application-number {
+      margin: 18px 0;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(214,168,79,0.12);
+      border: 1px solid rgba(214,168,79,0.28);
+      text-align: center;
+    }
+
+    .application-number span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .application-number strong {
+      font-size: 30px;
+      color: var(--gold);
+      letter-spacing: 0.03em;
+    }
+
+    @media (max-width: 900px) {
+      .hero, .section {
+        grid-template-columns: 1fr;
+      }
+
+      .highlights {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 30px;
+      }
+
+      .hero-card, .booking-card {
+        padding: 26px;
+        border-radius: 24px;
+      }
+
+      .pay-option {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="ageGate">
+    <div class="age-card">
+      <div class="brand" style="justify-content:center;margin-bottom:18px;">
+        <span class="brand-mark"></span> Post Dates
+      </div>
+      <h2>21+ Entry Check</h2>
+      <p>This page is for adults only. Please confirm you are 21 or over before continuing.</p>
+      <label style="display:inline-block;margin:12px 0 18px;color:var(--text);">
+        <input type="checkbox" id="confirmAge"> I confirm I am 21+
+      </label>
+      <button onclick="enterSite()">Enter Site</button>
+    </div>
+  </div>
+
+  <main class="page">
+    <header>
+      <div class="brand"><span class="brand-mark"></span> Post Dates</div>
+      <div class="header-actions">
+        <button class="track-link" type="button" onclick="openTrackModal()">Track your application</button>
+        <div class="pill status-pill"><span class="status-dot"></span> Applications open</div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-card">
+        <div class="tagline">Date application portal</div>
+        <h1>Book a date with <span>Post</span>.</h1>
+        <p class="subtitle">
+          Some applications are remembered. Most are forgotten. Upload your photos and make yours stand out.
+        </p>
+
+        <div class="highlights">
+          <div class="highlight">
+            <strong>£75</strong>
+            <span>Booking deposit</span>
+          </div>
+          <div class="highlight">
+            <strong>10k+</strong>
+            <span>Live waiting list</span>
+          </div>
+          <div class="highlight">
+            <strong>£10k</strong>
+            <span>Skip the queue</span>
+          </div>
+        </div>
+
+        <div class="waiting-card">
+          <div class="waiting-top">
+            <span>Active Waiting List</span>
+            <span class="live-dot">Live</span>
+          </div>
+          <div class="waiting-number" id="waitingCount">10,648</div>
+          <div class="progress"><span id="progressBar"></span></div>
+          <p style="color:var(--muted);margin:12px 0 0;font-size:14px;">
+            Demand remains high. Queue position is updated in real time.
+          </p>
+        </div>
+
+        <div class="payment-card">
+          <h2>Payment Options</h2>
+          <p>Secure your place or jump straight to priority review. Standard deposits are credited back on our wedding day.</p>
+
+          <div class="payment-options">
+            <div class="pay-option selected">
+              <div>
+                <strong>£75 Deposit</strong>
+                <small>Standard application review</small>
+              </div>
+              <a class="payment-button" href="#" onclick="selectPayment(event, this, '£75 deposit')">Pay £75</a>
+            </div>
+
+            <div class="pay-option">
+              <div>
+                <strong>£10,000 Skip the Queue</strong>
+                <small>Priority review, elite applicant lane</small>
+              </div>
+              <a class="payment-button gold-button" href="#" onclick="selectPayment(event, this, '£10,000 queue jump')">Skip Queue</a>
+            </div>
+          </div>
+
+          <div class="small-print">Deposit payments secure your application review. Prefer Bitcoin? DM for alternative payment options.</div>
+        </div>
+      </div>
+
+      <form class="booking-card" id="bookingForm">
+        <h2>Reserve your slot</h2>
+        <p>Submit your details below. Keep it confident, direct, and honest.</p>
+
+        <label for="name">Your name</label>
+        <input id="name" name="name" type="text" placeholder="Enter your name" required />
+
+        <label for="email">Email address</label>
+        <input id="email" name="email" type="email" placeholder="you@example.com" required />
+
+        <label for="age">Age</label>
+        <input id="age" name="age" type="number" min="21" placeholder="21+" required />
+
+        <label for="weight">Weight</label>
+        <input id="weight" name="weight" type="number" min="30" max="250" step="0.1" placeholder="Weight in kg" />
+
+        <label for="city">City</label>
+        <input id="city" name="city" type="text" placeholder="London, Manchester, New York..." />
+
+        <label for="date">Preferred date</label>
+        <input id="date" name="date" type="date" required />
+
+        <label for="time">Preferred time</label>
+        <select id="time" name="time" required>
+          <option value="">Select a time</option>
+          <option>Friday, 7:30pm</option>
+          <option>Saturday, 6:00pm</option>
+          <option>Saturday, 8:30pm</option>
+          <option>Sunday, 4:00pm</option>
+        </select>
+
+        <label for="vibe">Ideal first date vibe</label>
+        <select id="vibe" name="vibe" required>
+          <option value="">Choose one</option>
+          <option>Drinks</option>
+          <option>Dinner</option>
+          <option>Arcade date</option>
+          <option>Coffee and walk</option>
+          <option>Surprise me</option>
+        </select>
+
+        <label for="photos">Upload recent photos</label>
+        <input id="photos" name="photos" type="file" accept="image/*" multiple />
+
+        <label for="message">Why should Post say yes?</label>
+        <textarea id="message" name="message" placeholder="Keep it charming, confident, and honest."></textarea>
+
+        <button type="submit">Submit application</button>
+
+        <div class="small-print" style="margin-top:10px;">
+          Success Rate: <strong style="color:var(--gold);">0.35%</strong>
+        </div>
+
+        <div class="success" id="successMsg">
+          Application received. Your profile has entered private review.
+        </div>
+
+        <div class="small-print">
+          Your application will be reviewed privately. If accepted, you’ll receive confirmation of next steps, payment details, and date availability.
+        </div>
+      </form>
+    </section>
+
+    <section class="section">
+      <div class="info-card">
+        <h3>How it works</h3>
+        <p>Apply, upload your photos, select your preferred date, then wait for review. Successful applicants receive confirmation.</p>
+      </div>
+      <div class="info-card">
+        <h3>Privacy Notice</h3>
+        <p>Photos and personal information are used solely for reviewing applications. Submitted data is handled privately, encrypted where stored, and will not be sold, shared, or published without consent.</p>
+      </div>
+      <div class="info-card">
+        <h3>Priority Review</h3>
+        <p>For those who believe life’s best opportunities shouldn’t wait. Priority applicants receive expedited review and front-of-queue consideration.</p>
+      </div>
+    </section>
+
+    <footer>
+      © 2026 Post Dates. Built for entertainment, confidence, and dangerously good calendar management.
+    </footer>
+  </main>
+<div class="track-modal" id="trackModal">
+    <div class="track-card">
+      <h2>Track your application</h2>
+      <p>Enter your applicant number and email to view your current review status.</p>
+
+      <label for="trackNumber">Applicant number</label>
+      <input id="trackNumber" type="text" placeholder="#123456" maxlength="7" />
+
+      <label for="trackEmail">Email address</label>
+      <input id="trackEmail" type="email" placeholder="you@example.com" />
+
+      <button type="button" onclick="trackApplication()" style="margin-top:14px;">Check Status</button>
+      <button type="button" onclick="closeTrackModal()" style="margin-top:10px;background:rgba(255,255,255,0.08);">Close</button>
+
+      <div class="track-result" id="trackResult">
+        Application found. Status: <strong style="color:var(--gold);">Private Review</strong><br>
+        Queue position and approval status are still being assessed.
+      </div>
+    </div>
+  </div>
+
+  <div class="review-modal" id="reviewModal">
+    <div class="review-card">
+      <h2>Application Submitted</h2>
+      <p>Your profile has entered the review process. Here’s what happens next.</p>
+
+      <div class="application-number">
+        <span>Your applicant number</span>
+        <strong id="applicantNumber">#000000</strong>
+      </div>
+
+      <div class="review-steps">
+        <div class="review-step">
+          <div class="step-icon">1</div>
+          <div>
+            <strong>Private Review</strong>
+            <span>Your details, photos, and date preferences are assessed.</span>
+          </div>
+        </div>
+        <div class="review-step">
+          <div class="step-icon">2</div>
+          <div>
+            <strong>Queue Position Updated</strong>
+            <span>Your application is placed into the live review queue.</span>
+          </div>
+        </div>
+        <div class="review-step">
+          <div class="step-icon">3</div>
+          <div>
+            <strong>Confirmation Sent</strong>
+            <span>If approved, you’ll receive next steps and date availability.</span>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="closeReviewModal()">Got it</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <div class="avatar" id="toastFlag">🇬🇧</div>
+    <div>
+      <strong id="toastTitle">New applicant added to the queue</strong>
+      <span id="toastText">Amelia from London, UK just joined.</span>
+    </div>
+  </div>
+
+  <script>
+    function enterSite() {
+      if (document.getElementById("confirmAge").checked) {
+        document.getElementById("ageGate").style.display = "none";
+      } else {
+        alert("Please confirm you are 21 or over.");
+      }
+    }
+
+    function selectPayment(event, element, item) {
+      event.preventDefault();
+
+      document.querySelectorAll(".pay-option").forEach(option => {
+        option.classList.remove("selected");
+      });
+
+      element.closest(".pay-option").classList.add("selected");
+    }
+
+    function generateApplicantNumber() {
+      return "#" + Math.floor(100000 + Math.random() * 900000);
+    }
+
+    document.getElementById("bookingForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const applicantNumber = generateApplicantNumber();
+      document.getElementById("applicantNumber").textContent = applicantNumber;
+      document.getElementById("successMsg").style.display = "block";
+      document.getElementById("reviewModal").style.display = "flex";
+    });
+
+    function closeReviewModal() {
+      document.getElementById("reviewModal").style.display = "none";
+    }
+function openTrackModal() {
+      document.getElementById("trackModal").style.display = "flex";
+    }
+
+    function closeTrackModal() {
+      document.getElementById("trackModal").style.display = "none";
+      document.getElementById("trackResult").style.display = "none";
+    }
+
+    function trackApplication() {
+      const number = document.getElementById("trackNumber").value.trim();
+      const email = document.getElementById("trackEmail").value.trim();
+      if (!number || !email) {
+        alert("Please enter your applicant number and email.");
+        return;
+      }
+      document.getElementById("trackResult").style.display = "block";
+    }
+
+    let waitingCount = 10648;
+    const waitingEl = document.getElementById("waitingCount");
+    const progressEl = document.getElementById("progressBar");
+
+    setInterval(() => {
+      waitingCount += Math.floor(Math.random() * 3) + 1;
+      waitingEl.textContent = waitingCount.toLocaleString();
+      const width = 64 + (waitingCount % 30);
+      progressEl.style.width = width + "%";
+    }, 2000);
+
+    const applicants = [
+      { flag: "🇬🇧", name: "Amelia", city: "London, UK" },
+      { flag: "🇺🇸", name: "Maya", city: "New York, USA" },
+      { flag: "🇫🇷", name: "Chloé", city: "Paris, France" },
+      { flag: "🇬🇭", name: "Akosua", city: "Accra, Ghana" },
+      { flag: "🇨🇦", name: "Sienna", city: "Toronto, Canada" },
+      { flag: "🇳🇬", name: "Ada", city: "Lagos, Nigeria" },
+      { flag: "🇪🇸", name: "Lucía", city: "Madrid, Spain" },
+      { flag: "🇧🇷", name: "Isabela", city: "São Paulo, Brazil" }
+    ];
+
+    const toast = document.getElementById("toast");
+    const toastFlag = document.getElementById("toastFlag");
+    const toastText = document.getElementById("toastText");
+
+    function showToast() {
+      const person = applicants[Math.floor(Math.random() * applicants.length)];
+      toastFlag.textContent = person.flag;
+      toastText.textContent = person.name + " from " + person.city + " just joined.";
+      toast.classList.add("show-toast");
+      setTimeout(() => {
+        toast.classList.remove("show-toast");
+      }, 4200);
+    }
+
+    setTimeout(showToast, 2200);
+    setInterval(showToast, 7000);
+  </script>
+</body>
+</html>
